@@ -45,29 +45,47 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
+  id             String    @id @default(cuid())
+  name           String?
+  email          String?   @unique
+  emailVerified  DateTime? @map("email_verified")
+  image          String?
   hashedPassword String?
-  accounts      Account[]
-  sessions      Session[]
-  anime         Anime[]
+  accounts       Account[]
+  sessions       Session[]
+  anime          Anime[]
+  Review         Review[]
+  Status         Status[]
 
   @@map("users")
 }
 
 model Anime {
-  id         String  @id @default(cuid())
+  id         String   @id @default(cuid())
   userId     String
   title      String
   seasonName String?
   seasonYear Int?
   imageUrl   String?
-  state      String
-  review     String?
-  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Review     Review[]
+  Status     Status[]
+}
+
+model Review {
+  id      String @id @default(cuid())
+  userId  String
+  animeId String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  anime   Anime  @relation(fields: [animeId], references: [id], onDelete: Cascade)
+}
+
+model Status {
+  id      String @id @default(cuid())
+  userId  String
+  animeId String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  anime   Anime  @relation(fields: [animeId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
