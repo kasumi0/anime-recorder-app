@@ -35,10 +35,10 @@ html {
  */
 
 :root {
-  --primary-c: #73a4c2;
+  --primary-c: #67a6be;
   --bg-c: #f2f5f6;
   --link-c: #6890ff;
-  --header-h: 80px;
+  --header-h: 60px;
   @media (width < 768px) {
     font-size: 0.9em;
   }
@@ -66,7 +66,11 @@ section {
  */
 
 main {
+  margin-top: var(--header-h);
   flex: 1;
+  & *:nth-child(n + 2) {
+    isolation: isolate;
+  }
 }
 
 /* Vertical rhythm */

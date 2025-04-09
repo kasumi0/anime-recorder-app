@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Montserrat, Zen_Kaku_Gothic_New } from "next/font/google";
 import "./globals.css";
+import { Header } from "./components/header/Header";
+import { ParticleBG } from "./components/particle/ParticleBG";
+import { NextAuthProvider } from "./lib/next-auth/provider";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -27,7 +30,13 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={`${montserrat.variable} ${zenKakuGothicNew.variable}`}>
-        {children}
+        <NextAuthProvider>
+          <Header />
+          <main>
+            <ParticleBG />
+            {children}
+          </main>
+        </NextAuthProvider>
       </body>
     </html>
   );

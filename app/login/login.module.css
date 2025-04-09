@@ -1,0 +1,104 @@
+.formCard {
+  --w: min(90vw, 440px);
+  border-radius: 1em;
+  position: absolute;
+  inset: calc((100% + var(--header-h)) / 2) auto auto 50%;
+  translate: -50% -50%;
+  width: var(--w);
+  background-color: rgb(255 255 255/0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.4);
+  overflow-x: hidden;
+  & h2 {
+    font-size: 2em;
+    font-weight: 600;
+  }
+  & form {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    & > button {
+      width: 100%;
+      background-color: var(--primary-c);
+      border-radius: 6px;
+      padding: 0.6em 1em;
+      color: #fff;
+      text-align: center;
+      font-weight: 500;
+      border: 2px solid var(--primary-c);
+      transition-property: color, background-color;
+      transition-duration: 0.4s;
+      &:hover {
+        color: var(--primary-c);
+        background-color: transparent;
+      }
+    }
+  }
+  & label {
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid;
+    position: relative;
+    & span {
+      position: absolute;
+      inset: 0.5rem auto auto 0;
+      display: inline-block;
+      pointer-events: none;
+      transition-property: inset, font-size, color, font-weight;
+      transition-duration: 0.5s;
+    }
+  }
+  & input {
+    width: 100%;
+    padding-block: 0.4em;
+    &:focus + span,
+    &:not(:placeholder-shown) + span {
+      font-size: 0.8em;
+      inset: -1rem auto auto 0;
+      color: var(--primary-c);
+      font-weight: 500;
+    }
+  }
+  & h3 {
+    text-align: center;
+  }
+}
+
+.contents {
+  display: flex;
+  width: calc(var(--w) * 2);
+  transition: translate 1s;
+  &:is(.isSignin *) {
+    translate: calc(var(--w) * -1);
+  }
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: var(--w);
+    padding: 5vw;
+    & > button {
+      align-self: center;
+      border-bottom: 1px solid;
+      transition: color .4s;
+      &:hover {
+        color: var(--primary-c);
+      }
+    }
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+  & button svg {
+    font-size: 3em;
+  }
+}
+
+.errorText {
+  color: red;
+  font-size: .9em;
+}

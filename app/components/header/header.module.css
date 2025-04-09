@@ -1,0 +1,31 @@
+.header {
+  height: var(--header-h);
+  background-color: #333;
+  padding-inline: 5vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 100;
+  position: fixed;
+  inset: 0 0 auto;
+  color: #fff;
+  & h1 {
+    font-size: 1.4em;
+  }
+  & nav {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    & a {
+      display: flex;
+      align-items: center;
+    }
+    & img, & svg {
+      color: #999;
+      width: 36px;
+      aspect-ratio: 1;
+      height: auto;
+      border-radius: 50%;
+    }
+  }
+}

@@ -1,0 +1,5 @@
+.particlesArea {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(rgb(158, 200, 255), rgb(234, 247, 250));
+}

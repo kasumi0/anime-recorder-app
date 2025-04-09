@@ -1,0 +1,61 @@
+.searchArea {
+  padding:  max(5vw, 50px) 5vw 0;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  & label {
+    box-shadow: 0 8px 16px rgb(0 0 0/0.2);
+    display: flex;
+    align-items: center;
+    width: min(100%, 340px);
+    border-radius: 2em;
+    overflow: hidden;
+    background-color: #fff;
+  }
+  & input {
+    padding: .5em .6em;
+    flex: 1;
+  }
+}
+.iconBox {
+  height: 100%;
+  display: grid;
+  padding-inline: .8em .5em;
+  place-items: center;
+  cursor: pointer;
+}
+
+.resultList {
+  padding: 5vw;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 5vw;
+  & li {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: rgb(0 0 0/0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #fff;
+    & > div {
+      align-self: end;
+      display: flex;
+      gap: .4em;
+      padding: 0 1em 1em 0;
+    }
+  }
+  & img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    margin-bottom: 0.6em;
+  }
+  & h3 {
+    flex: 1;
+    font-weight: 500;
+    padding: 0.4em 1em 0;
+  }
+}
