@@ -54,8 +54,8 @@ model User {
   accounts       Account[]
   sessions       Session[]
   anime          Anime[]
-  Review         Review[]
-  Status         Status[]
+  reviews         Review[]
+  statuses         Status[]
 
   @@map("users")
 }
@@ -68,8 +68,8 @@ model Anime {
   seasonYear Int?
   imageUrl   String?
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Review     Review[]
-  Status     Status[]
+  reviews     Review[]
+  statuses     Status[]
 }
 
 model Review {
