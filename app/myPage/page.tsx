@@ -1,7 +1,8 @@
+import { MyPage } from "../features/myPage/MyPage";
 
-export default function MyPage() {
+export default function MyPagePage() {
   return (
-    <div>myPage</div>
+    <MyPage />
   )
 }
 

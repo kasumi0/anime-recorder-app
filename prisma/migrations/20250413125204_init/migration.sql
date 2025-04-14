@@ -1,3 +1,6 @@
+-- CreateEnum
+CREATE TYPE "WatchState" AS ENUM ('WANT_TO_WATCH', 'WATCHING', 'COMPLETED', 'ON_HOLD', 'DROPPED');
+
 -- CreateTable
 CREATE TABLE "accounts" (
     "id" TEXT NOT NULL,
@@ -40,8 +43,7 @@ CREATE TABLE "users" (
 
 -- CreateTable
 CREATE TABLE "Anime" (
-    "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
+    "id" INTEGER NOT NULL,
     "title" TEXT NOT NULL,
     "seasonName" TEXT,
     "seasonYear" INTEGER,
@@ -51,10 +53,21 @@ CREATE TABLE "Anime" (
 );
 
 -- CreateTable
+CREATE TABLE "UserAnime" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "animeId" INTEGER NOT NULL,
+
+    CONSTRAINT "UserAnime_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Review" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "animeId" TEXT NOT NULL,
+    "animeId" INTEGER NOT NULL,
+    "comment" TEXT,
+    "rating" INTEGER,
 
     CONSTRAINT "Review_pkey" PRIMARY KEY ("id")
 );
@@ -63,7 +76,8 @@ CREATE TABLE "Review" (
 CREATE TABLE "Status" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "animeId" TEXT NOT NULL,
+    "animeId" INTEGER NOT NULL,
+    "state" "WatchState" NOT NULL,
 
     CONSTRAINT "Status_pkey" PRIMARY KEY ("id")
 );
@@ -85,6 +99,15 @@ CREATE UNIQUE INDEX "sessions_session_token_key" ON "sessions"("session_token");
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "UserAnime_userId_animeId_key" ON "UserAnime"("userId", "animeId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Review_userId_animeId_key" ON "Review"("userId", "animeId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Status_userId_animeId_key" ON "Status"("userId", "animeId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "verification_tokens_identifier_token_key" ON "verification_tokens"("identifier", "token");
 
 -- AddForeignKey
@@ -94,7 +117,10 @@ ALTER TABLE "accounts" ADD CONSTRAINT "accounts_user_id_fkey" FOREIGN KEY ("user
 ALTER TABLE "sessions" ADD CONSTRAINT "sessions_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Anime" ADD CONSTRAINT "Anime_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "UserAnime" ADD CONSTRAINT "UserAnime_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserAnime" ADD CONSTRAINT "UserAnime_animeId_fkey" FOREIGN KEY ("animeId") REFERENCES "Anime"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Review" ADD CONSTRAINT "Review_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
