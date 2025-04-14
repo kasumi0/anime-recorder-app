@@ -42,5 +42,8 @@ export const searchAnime = async (titles: string[]) => {
 
   const json = await response.json();
   const works = json.data?.searchWorks?.nodes;
-  return works?.length ? { works } : { error: "該当するアニメが見つかりません" };
+  if (!works || works.length === 0) {
+    return { error: "該当するアニメが見つかりません" };
+  }
+  return { works };
 };

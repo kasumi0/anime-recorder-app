@@ -14,7 +14,7 @@ const randomPastelColor = () => {
 const Box = ({ click }: { click: boolean }) => {
   const ref = useRef<THREE.Mesh>(null);
   const velocity = useRef(new THREE.Vector3(0, 0, 0));
-  const maxRange = 12;
+  const maxRange = 9;
   const initialPosition = useRef(
     new THREE.Vector3(
       (Math.random() - 0.5) * maxRange * 2,
@@ -25,17 +25,10 @@ const Box = ({ click }: { click: boolean }) => {
   const [time] = useState(() => new THREE.Clock());
   const color = useRef(randomPastelColor()).current;
   const isWireframe = useRef(Math.random() < 0.5).current;
-  const geometryArgs = useRef<[number, number, number]>([
-    2 + Math.random() * 1.3,
-    2 + Math.random() * 1.3,
-    2 + Math.random() * 1.3,
-  ]).current;
+  const geometryArgs = useRef<[number, number, number]>([2, 2, 2]).current;
 
-  const averageSize = useRef(
-    (geometryArgs[0] + geometryArgs[1] + geometryArgs[2]) / 3
-  ).current;
   const direction = useRef(Math.random() < 0.5 ? 1 : -1).current;
-  const rotationSpeed = useRef(0.1 / averageSize ** 3 * direction).current;
+  const rotationSpeed = useRef(.005 * direction).current;
 
   useEffect(() => {
     if (ref.current) {
@@ -95,7 +88,7 @@ export const ParticleBG = () => {
 
   return (
     <div onClick={handleClick} className={particlesArea}>
-      <Canvas camera={{ position: [0, 0, 20] }}>
+      <Canvas camera={{ position: [0, 0, 16] }}>
         <ambientLight intensity={1} />
         <directionalLight position={[10, 10, 10]} intensity={2.6} />
         {Array.from({ length: 30 }).map((_, i) => (
