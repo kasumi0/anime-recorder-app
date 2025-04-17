@@ -19,11 +19,17 @@ export const Anime = async (props: AnimeType) => {
       }))
     : false;
 
+  const existsInAnime = !!(await prisma.anime.findUnique({
+    where: { id: props.annictId },
+    select: { id: true },
+  }));
+
   return (
     <AnimeCard
       {...props}
       isLoggedIn={!!session}
       isRegistered={isRegistered}
+      existsInAnime={existsInAnime}
     />
   );
 };

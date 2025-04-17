@@ -1,16 +1,17 @@
-'use client'
+"use client";
 
-import { Register } from "./Register";
+import { Register } from "@/app/components/register/Register";
 import { AnimeType } from "@/app/types/types";
 import { getSeason } from "@/app/hooks/getSeason";
 import Link from "next/link";
 import styles from "../top.module.css";
 import { Thumbnail } from "@/app/components/Thumbnail";
-const { isRegisteredLabel, body, linkLogin } = styles;
+const { isRegisteredLabel, body, linkCover, linkLogin } = styles;
 
 type AnimeCardProps = AnimeType & {
   isRegistered: boolean;
   isLoggedIn: boolean;
+  existsInAnime: boolean;
 };
 
 export const AnimeCard = ({
@@ -21,11 +22,15 @@ export const AnimeCard = ({
   seasonName,
   isRegistered,
   isLoggedIn,
+  existsInAnime,
 }: AnimeCardProps) => {
-
   const getRegister = () => {
     if (!isLoggedIn) {
-      return <Link href={"/login"} className={linkLogin}>ログインして登録</Link>;
+      return (
+        <Link href={"/login"} className={linkLogin}>
+          ログインして登録
+        </Link>
+      );
     }
     if (isRegistered) {
       return <p className={isRegisteredLabel}>登録済み</p>;
@@ -44,6 +49,9 @@ export const AnimeCard = ({
     <li key={annictId}>
       <Thumbnail imageUrl={image?.facebookOgImageUrl} title={title} />
       <div className={body}>
+        {existsInAnime && (
+          <Link href={`/anime/${annictId}`} className={linkCover}></Link>
+        )}
         <h2>{title}</h2>
         <div>
           {seasonYear && <span>{`${seasonYear}年`}</span>}

@@ -11,7 +11,7 @@ import { deleteAnime } from "@/app/lib/actions/deleteAnime";
 import toast from "react-hot-toast";
 import { EditModal } from "../editModal/EditModal";
 import { ModalPortal } from "../ModalPortal";
-import { Rating } from "react-simple-star-rating";
+import StarRatings from 'react-star-ratings'
 import { getStatus } from "@/app/hooks/getStatus";
 const { body, row, commentBox, noReview, buttons, toolTip } = styles;
 
@@ -22,7 +22,6 @@ export const MyAnime = ({
   imageUrl,
   seasonYear,
   seasonName,
-  registerId,
   status,
   rating,
   comment,
@@ -31,7 +30,7 @@ export const MyAnime = ({
   const [isRegistered, setIsRegistered] = useState(true);
   const handleDelete = () => {
     startTransition(async () => {
-      const promise = deleteAnime(registerId);
+      const promise = deleteAnime(userId, id);
       toast.promise(promise, {
         loading: "削除中...",
         success: "My Pageから削除しました",
@@ -66,11 +65,11 @@ export const MyAnime = ({
         <Thumbnail imageUrl={imageUrl} title={title} />
         <h3>{title}</h3>
         <div className={row}>
+          <span>{getStatus(reviewState.status)}</span>
           <div>
             {seasonYear && <span>{`${seasonYear}年`}</span>}
             {seasonName && <span>{getSeason(seasonName)}</span>}
           </div>
-          {reviewState.status && <span>{getStatus(reviewState.status)}</span>}
         </div>
 
         <h4>レビュー</h4>
@@ -79,11 +78,12 @@ export const MyAnime = ({
         ) : (
           <p className={noReview}>レビューはまだ書かれていません。</p>
         )}
-        <Rating
-          initialValue={reviewState.rating}
-          size={25}
-          readonly
-          allowHover={false}
+        <StarRatings
+          rating={reviewState.rating}
+          starRatedColor="gold"
+          numberOfStars={5}
+          starDimension='25px'
+          starSpacing="2px"
         />
         <div className={buttons}>
           <button type="button" onClick={toggleModal}>

@@ -4,7 +4,7 @@ import { registerAnime } from "@/app/lib/actions/resisterAnime";
 import { useState, useTransition } from "react";
 import { RegisterType } from "@/app/types/types";
 import toast from "react-hot-toast";
-import styles from "../top.module.css";
+import styles from "./register.module.css";
 const { registerButton, isRegisteredLabel } = styles;
 
 export const Register = (props: RegisterType) => {
