@@ -66,7 +66,7 @@ main {
   min-height: 100vh;
   margin-left: calc(var(--header-w) + 5vw);
   /* flex: 1; */
-  & *:nth-child(n + 2) {
+  & > *:nth-child(n + 2) {
     isolation: isolate;
   }
 }

@@ -1,7 +1,7 @@
 import { Thumbnail } from "@/app/components/Thumbnail";
 import { FormResult, ReviewDataType, StatusType } from "@/app/types/types";
-import { Rating } from "react-simple-star-rating";
 import { startTransition, useActionState, useEffect, useState } from "react";
+import StarRatings from "react-star-ratings";
 import { IoCloseCircle } from "react-icons/io5";
 import { FaCircleCheck } from "react-icons/fa6";
 import styles from "./editModal.module.css";
@@ -52,10 +52,6 @@ export const EditModal = ({
     }
   }, [formState, toggleModal, hasShownToast, onUpdate]);
 
-  const handleRating = (rate: number) => {
-    setRating(rate);
-  };
-
   return (
     <div className={`${modal} ${isOpen ? open : ""}`}>
       <form action={formAction}>
@@ -72,11 +68,14 @@ export const EditModal = ({
             </select>
           </div>
           <div className={ratingArea}>
-            <Rating
-              onClick={handleRating}
-              initialValue={ratingState}
-              allowHover
-              size={25}
+            <StarRatings
+              rating={ratingState}
+              starRatedColor="gold"
+              starHoverColor="orange"
+              numberOfStars={5}
+              changeRating={(newRating) => setRating(newRating)}
+              starDimension="25px"
+              starSpacing="2px"
             />
             {ratingState !== 0 && <span>星{ratingState}つ</span>}
           </div>
