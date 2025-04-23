@@ -1,20 +1,20 @@
+"use client";
+
 import { FaCircleUser } from "react-icons/fa6";
 import styles from "./header.module.css";
-import Link from "next/link";
+import { Link } from "@/app/components/linkProgressBar/Link";
 import Image from "next/image";
-import { nextAuthOptions } from "@/app/lib/next-auth/options";
-import { getServerSession } from "next-auth";
 import { IoSearch } from "react-icons/io5";
 import { LuLogIn } from "react-icons/lu";
 import { LuLogOut } from "react-icons/lu";
 import { TbMoodEdit } from "react-icons/tb";
 import { PiListHeart } from "react-icons/pi";
+import { useSession } from "next-auth/react";
 const { headerArea, header, iconArea, linkArea, userName } = styles;
 
-export const Header = async () => {
-  const session = await getServerSession(nextAuthOptions);
+export const Header = () => {
+  const { data: session } = useSession();
   const user = session?.user;
-
   return (
     <div className={headerArea}>
       <header className={header}>

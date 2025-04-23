@@ -6,6 +6,7 @@ import { getSeason } from "@/app/hooks/getSeason";
 import Link from "next/link";
 import styles from "../top.module.css";
 import { Thumbnail } from "@/app/components/Thumbnail";
+import { LinkProgressBar } from "@/app/components/linkProgressBar/LinkProgressBar";
 const { isRegisteredLabel, body, linkCover, linkLogin } = styles;
 
 type AnimeCardProps = AnimeType & {
@@ -50,7 +51,9 @@ export const AnimeCard = ({
       <Thumbnail imageUrl={image?.facebookOgImageUrl} title={title} />
       <div className={body}>
         {existsInAnime && (
-          <Link href={`/anime/${annictId}`} className={linkCover}></Link>
+          <Link href={`/anime/${annictId}`} className={linkCover}>
+            <LinkProgressBar size={8} />
+          </Link>
         )}
         <h2>{title}</h2>
         <div>

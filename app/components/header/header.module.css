@@ -20,7 +20,6 @@
   color: #fff;
   rotate: 0 1 0 20deg;
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3);
 
   & h1 {
@@ -99,6 +98,9 @@
       &::before {
         opacity: 1;
       }
+    }
+    & > span {
+      margin-left: auto;
     }
   }
   & svg {

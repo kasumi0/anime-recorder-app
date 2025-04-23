@@ -7,6 +7,8 @@ import styles from "./animeDetail.module.css";
 import { Register } from "../../components/register/Register";
 import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "@/app/lib/next-auth/options";
+import { UserCount } from "./UserCount";
+import { Thumbnail } from "@/app/components/Thumbnail";
 const {
   card,
   dataArea,
@@ -66,9 +68,7 @@ export const AnimeDetail = async ({ id }: { id: number }) => {
   return (
     <section>
       <div className={card}>
-        {imageUrl && (
-          <Image src={imageUrl} alt={title} width={300} height={100} />
-        )}
+        <Thumbnail imageUrl={imageUrl} title={title}/>
         <div className={dataArea}>
           <h2>{title}</h2>
           <div className={seasonArea}>
@@ -78,7 +78,7 @@ export const AnimeDetail = async ({ id }: { id: number }) => {
           <dl>
             <div className={row}>
               <dt>登録ユーザー数</dt>
-              <dd>{userAnime.length}人</dd>
+              <UserCount init={userAnime.length} />
             </div>
             <div className={row}>
               <dt>レビュー数</dt>
@@ -128,17 +128,17 @@ export const AnimeDetail = async ({ id }: { id: number }) => {
           )}
         </div>
         <div className={registerArea}>
-        {isRegistered ? (
-          <p className={isRegisteredLabel}>登録済み</p>
-        ) : (
-          <Register
-            id={id}
-            title={title}
-            seasonYear={seasonYear}
-            seasonName={seasonName}
-            imageUrl={imageUrl}
-          />
-        )}
+          {isRegistered ? (
+            <p className={isRegisteredLabel}>登録済み</p>
+          ) : (
+            <Register
+              id={id}
+              title={title}
+              seasonYear={seasonYear}
+              seasonName={seasonName}
+              imageUrl={imageUrl}
+            />
+          )}
         </div>
       </div>
     </section>

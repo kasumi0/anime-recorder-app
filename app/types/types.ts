@@ -49,3 +49,8 @@ export type FormResult = {
   };
 };
 
+export type MyAnimeFromPrisma = RegisterType & {
+  userAnime: { id: string }[];
+  statuses: { state: StatusType }[];
+  reviews: { rating: number | null; comment: string | null }[];
+};

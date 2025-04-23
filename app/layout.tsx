@@ -4,7 +4,7 @@ import "./globals.css";
 import { Header } from "./components/header/Header";
 import { ParticleBG } from "./components/particle/ParticleBG";
 import { NextAuthProvider } from "./lib/next-auth/provider";
-import {Toaster} from 'react-hot-toast'
+import { Toaster } from "react-hot-toast";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -36,7 +36,7 @@ export default function RootLayout({
           <main>
             <ParticleBG />
             {children}
-            <Toaster position="bottom-right"/>
+            <Toaster position="bottom-right" />
           </main>
         </NextAuthProvider>
       </body>

@@ -1,18 +1,18 @@
 "use client";
 
+import { useState, useTransition } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { getSeason } from "@/app/hooks/getSeason";
+import { getStatus } from "@/app/hooks/getStatus";
 import { Thumbnail } from "@/app/components/Thumbnail";
 import { MyAnimeType, StatusType } from "@/app/types/types";
-import styles from "./myAnime.module.css";
-import { useState, useTransition } from "react";
 import { deleteAnime } from "@/app/lib/actions/deleteAnime";
-import toast from "react-hot-toast";
 import { EditModal } from "../editModal/EditModal";
-import { ModalPortal } from "../ModalPortal";
-import StarRatings from 'react-star-ratings'
-import { getStatus } from "@/app/hooks/getStatus";
+import toast from "react-hot-toast";
+import StarRatings from "react-star-ratings";
+import styles from "./myAnime.module.css";
+import { Portal } from "@/app/components/Portal";
 const { body, row, commentBox, noReview, buttons, toolTip } = styles;
 
 export const MyAnime = ({
@@ -71,7 +71,6 @@ export const MyAnime = ({
             {seasonName && <span>{getSeason(seasonName)}</span>}
           </div>
         </div>
-
         <h4>レビュー</h4>
         {reviewState.comment ? (
           <p className={commentBox}>{reviewState.comment}</p>
@@ -82,7 +81,7 @@ export const MyAnime = ({
           rating={reviewState.rating}
           starRatedColor="gold"
           numberOfStars={5}
-          starDimension='25px'
+          starDimension="25px"
           starSpacing="2px"
         />
         <div className={buttons}>
@@ -95,21 +94,22 @@ export const MyAnime = ({
             <span className={toolTip}>My Pageから削除</span>
           </button>
         </div>
-
-        <ModalPortal>
-          <EditModal
-            isOpen={isOpen}
-            toggleModal={toggleModal}
-            id={id}
-            userId={userId}
-            title={title}
-            imageUrl={imageUrl}
-            status={reviewState.status}
-            rating={reviewState.rating}
-            comment={reviewState.comment}
-            onUpdate={handleUpdate}
-          />
-        </ModalPortal>
+        {isOpen && (
+          <Portal>
+            <EditModal
+              isOpen={isOpen}
+              toggleModal={toggleModal}
+              id={id}
+              userId={userId}
+              title={title}
+              imageUrl={imageUrl}
+              status={reviewState.status}
+              rating={reviewState.rating}
+              comment={reviewState.comment}
+              onUpdate={handleUpdate}
+            />
+          </Portal>
+        )}
       </li>
     );
   }

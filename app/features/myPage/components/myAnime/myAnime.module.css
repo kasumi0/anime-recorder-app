@@ -1,9 +1,15 @@
+.myAnimeList {
+  padding-top: max(5vw, 50px);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 5vw;
+}
+
 .body {
   padding: max(3vw, 1em);
   border-radius: 10px;
   background-color: rgb(0 0 0/0.4);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -30,7 +36,6 @@
   > div {
     display: flex;
     gap: 10px;
-    
   }
   > span {
     background-color: #fff;
@@ -46,6 +51,7 @@
   padding: 0.3em 0.6em;
   border: 1px solid #aaa;
   border-radius: 6px;
+  white-space: pre-line;
 }
 .noReview {
   transform: skew(-20deg);
@@ -89,7 +95,6 @@
   white-space: nowrap;
   background-color: rgb(0 0 0/ 0.5);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   inset: auto auto -2.4em 50%;
   translate: -50%;
   padding: 0.2em 0.4em;
@@ -98,4 +103,29 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s;
+}
+
+.moreButton {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  gap: 0.6em;
+  padding: 0.8em 1.4em;
+  font-weight: 500;
+  background-color: var(--primary-c);
+  border-radius: 4px;
+  margin: max(5vw, 50px) auto 0;
+  transition: background-color 0.6s;
+  &:after {
+    content: "";
+    width: 7px;
+    margin-bottom: 3px;
+    aspect-ratio: 1;
+    border-right: 2px solid;
+    border-bottom: 2px solid;
+    rotate: 45deg;
+  }
+  &:hover {
+    background-color: #333;
+  }
 }
