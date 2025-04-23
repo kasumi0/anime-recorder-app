@@ -14,12 +14,12 @@ export const Signup = () => {
 
   useEffect(() => {
     if (state.success) {
-        signIn("credentials", {
-          email: state.email,
-          password: state.password,
-          redirect: true,
-          callbackUrl: '/'
-        });
+      signIn("credentials", {
+        email: state.email,
+        password: state.password,
+        redirect: true,
+        callbackUrl: "/",
+      });
     }
   }, [state]);
 

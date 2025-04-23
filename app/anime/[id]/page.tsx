@@ -5,7 +5,7 @@ type AnimePageProps = {
 };
 
 export default async function AnimePage({ params }: AnimePageProps) {
-  const id = parseInt(params.id, 10);
+  const id = parseInt(params.id, 10);  
 
-   return <AnimeDetail id={id} />
+  return <AnimeDetail id={id} />;
 }

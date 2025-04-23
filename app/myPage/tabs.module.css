@@ -1,0 +1,76 @@
+.pageTitle {
+  font-size: 2em;
+  color: #fff;
+  font-weight: 600;
+  text-shadow: 0 0.2em 0.4em rgb(0 0 0/0.3);
+}
+
+.tabs {
+  --p: 4px;
+  width: min(100%, 900px);
+  margin: max(5vw, 50px) auto 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.4em, 1fr));
+  background-color: rgb(255 255 255/0.4);
+  border-radius: 1.6em;
+  backdrop-filter: blur(6px);
+  position: relative;
+  padding: var(--p);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: anchor(--link start);
+    background-color: #fff;
+    border-radius: 2em;
+    width: anchor-size(--link width);
+    height: anchor-size(--link height);
+    opacity: 0;
+    transition-property: inset, opacity;
+    transition-duration: 0.4s;
+  }
+  &::after {
+    --h: 3px;
+    --w: 2em;
+    position: absolute;
+    inset: calc(anchor(--link-active start) - (var(--p) + var(--h))) auto auto
+      calc(anchor(--link-active center) - var(--w) / 2);
+    content: "";
+    width: var(--w);
+    height: var(--h);
+    background-color: var(--primary-c);
+    transition-property: inset;
+    transition-duration: 0.8s;
+  }
+
+  &:has(a:hover)::before {
+    opacity: 1;
+  }
+  & > a {
+    position: relative;
+    text-align: center;
+    color: rgb(0 0 0/0.4);
+    padding: 0.8em 1.2em;
+    transition: color 0.4s;
+    &::before {
+      position: absolute;
+      inset: 0;
+      content: "";
+    }
+    &:hover {
+      color: #333;
+      anchor-name: --link;
+    }
+    &.active {
+      color: var(--primary-c);
+      font-weight: 500;
+      &::before {
+        anchor-name: --link-active;
+      }
+    }
+    & > span {
+      position: absolute;
+      inset: auto auto -24px 50%;
+      translate: -50%; 
+    }
+  }
+}

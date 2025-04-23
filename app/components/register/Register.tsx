@@ -23,6 +23,7 @@ export const Register = (props: RegisterType) => {
       const result = await promise;
       if (result) {
         setIsRegistered(true);
+        window.dispatchEvent(new CustomEvent("anime-registered"));
       }
     });
   };
@@ -32,7 +33,12 @@ export const Register = (props: RegisterType) => {
   }
 
   return (
-    <button className={registerButton} type="button" onClick={handleRegister} disabled={isPending}>
+    <button
+      className={registerButton}
+      type="button"
+      onClick={handleRegister}
+      disabled={isPending}
+    >
       {isPending ? "登録中..." : "My Pageに登録"}
     </button>
   );

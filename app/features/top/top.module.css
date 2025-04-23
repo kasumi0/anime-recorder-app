@@ -7,24 +7,22 @@
   font-weight: 500;
   background-color: rgb(0 0 0/0.4);
   backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
 }
 .resultList {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 5vw;
   & li {
-    border-radius: 10px;
-    overflow: hidden;
+    --r: 10px;
+    border-radius: var(--r);
     background-color: rgb(0 0 0/0.4);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     color: #fff;
     display: flex;
     flex-direction: column;
     position: relative;
     transition-property: translate, box-shadow;
-    transition-duration: .4s;
+    transition-duration: 0.4s;
     &:has(.linkCover:hover) {
       translate: 0 -14px;
       box-shadow: 0 10px 20px rgb(0 0 0/0.3);
@@ -35,6 +33,7 @@
     height: auto;
     aspect-ratio: 16/9;
     object-fit: cover;
+    border-radius: var(--r) var(--r) 0 0;
   }
 }
 
@@ -47,9 +46,16 @@
     display: flex;
     align-items: center;
     width: var(--header-w);
+    background-color: #fff;
     border-radius: 2em;
     overflow: hidden;
-    background-color: #fff;
+    position: relative;
+    & > span:not(.iconBox) {
+      position: absolute;
+      inset: 50% 1em auto auto;
+      translate: 0 -50%;
+      opacity: .6;
+    }
   }
   & input {
     width: 100%;
@@ -64,7 +70,6 @@
   place-items: center;
   cursor: pointer;
 }
-
 
 .body {
   flex: 1;
@@ -87,6 +92,11 @@
   position: absolute;
   inset: 0;
   z-index: 1;
+  > span {
+    position: fixed;
+    inset: auto auto -2em 50%;
+    translate: -50%;
+  }
 }
 .isRegisteredLabel {
   color: #ddd;
@@ -107,4 +117,3 @@
     opacity: 0.7;
   }
 }
-

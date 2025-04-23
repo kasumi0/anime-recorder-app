@@ -3,8 +3,9 @@ import { nextAuthOptions } from "@/app/lib/next-auth/options";
 import { prisma } from "@/app/lib/prisma";
 import { MyAnimeList } from "./components/myAnime/MyAnimeList";
 import { PER_PAGE } from "@/app/api/user-anime/route";
+import { StatusType } from "@/app/types/types";
 
-export const MyPage = async () => {
+export const MyPagePerStatus = async ({ status }: { status: StatusType }) => {
   const session = await getServerSession(nextAuthOptions);
   const userId = session?.user?.id;
 
@@ -12,7 +13,7 @@ export const MyPage = async () => {
     prisma.anime.findMany({
       take: PER_PAGE,
       where: {
-        userAnime: { some: { userId } },
+        statuses: { some: { state: status, userId } },
       },
       include: {
         userAnime: { where: { userId }, select: { id: true } },
@@ -20,8 +21,8 @@ export const MyPage = async () => {
         reviews: { where: { userId } },
       },
     }),
-    prisma.anime.count({
-      where: { userAnime: { some: { userId } } },
+    prisma.status.count({
+      where: { state: status, userId },
     }),
   ]);
 

@@ -15,36 +15,34 @@ export const registerAnime = async ({
   const session = await getServerSession(nextAuthOptions);
   const userId = session?.user?.id;
 
+  if (!userId) return;
 
-  if (userId) {
-    return await prisma.$transaction([
-      prisma.userAnime.create({
-        data: {
-          user: {
-            connect: {id: userId}
-          },
-          anime: {
-            connectOrCreate: {
-              where: {id},
-              create: {
-                id,
-                title,
-                imageUrl,
-                seasonYear,
-                seasonName,
-              },
+  return await prisma.$transaction([
+    prisma.userAnime.create({
+      data: {
+        user: {
+          connect: { id: userId },
+        },
+        anime: {
+          connectOrCreate: {
+            where: { id },
+            create: {
+              id,
+              title,
+              imageUrl,
+              seasonYear,
+              seasonName,
             },
           },
         },
-      }),
-      prisma.status.create({
-        data: {
-          userId,
-          animeId: id,
-          state: "WANT_TO_WATCH",
-        },
-      }),
-    ]);
-
-  }
+      },
+    }),
+    prisma.status.create({
+      data: {
+        userId,
+        animeId: id,
+        state: "WANT_TO_WATCH",
+      },
+    }),
+  ]);
 };
