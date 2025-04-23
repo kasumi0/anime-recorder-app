@@ -9,11 +9,16 @@ import { LuLogOut } from "react-icons/lu";
 import { TbMoodEdit } from "react-icons/tb";
 import { PiListHeart } from "react-icons/pi";
 import { Link } from "../linkProgressBar/Link";
+import UserDisplay from "./state/UserDisplay";
+import { prisma } from "@/app/lib/prisma";
 const { headerArea, header, iconArea, linkArea, userName } = styles;
 
 export const Header = async () => {
   const session = await getServerSession(nextAuthOptions);
-  const user = session?.user;
+  const user = await prisma.user.findUnique({ where: { id: session?.user.id } });
+
+  // セッションを新しいものにするのか、名前はセッションにあるIDをもとに名前を毎回DBから持ってくるほうがいいんですか？
+
 
   return (
     <div className={headerArea}>
@@ -33,7 +38,9 @@ export const Header = async () => {
                 ) : (
                   <FaCircleUser />
                 )}
-                <span className={userName}>{user.name ?? "guest"}</span>
+                <span className={userName}>
+                  <UserDisplay defaultName={user.name ?? "guest"}/>
+                </span>
               </Link>
             ) : (
               <Link href={"/login"}>
