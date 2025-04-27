@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "@/app/lib/next-auth/options";
 import { prisma } from "@/app/lib/prisma";
 import { MyAnimeList } from "./components/myAnime/MyAnimeList";
-import { PER_PAGE } from "@/app/api/user-anime/route";
+import { PER_PAGE } from "@/app/lib/pagination";
 
 export const MyPage = async () => {
   const session = await getServerSession(nextAuthOptions);
@@ -15,7 +15,7 @@ export const MyPage = async () => {
         userAnime: { some: { userId } },
       },
       include: {
-        userAnime: { where: { userId }, select: { id: true } },
+        userAnime: { where: { userId }, select: { id: true, imageUrl: true } },
         statuses: { where: { userId } },
         reviews: { where: { userId } },
       },

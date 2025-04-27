@@ -117,3 +117,30 @@
     opacity: 0.7;
   }
 }
+
+.moreButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  width: 10em;
+  gap: 1em;
+  padding-block: 0.8em;
+  font-weight: 500;
+  background-color: var(--primary-c);
+  border-radius: 4px;
+  margin: max(5vw, 50px) auto 0;
+  transition: background-color 0.6s;
+  &:after {
+    content: "";
+    width: 7px;
+    margin-bottom: 3px;
+    aspect-ratio: 1;
+    border-right: 2px solid;
+    border-bottom: 2px solid;
+    rotate: 45deg;
+  }
+  &:hover {
+    background-color: #333;
+  }
+}

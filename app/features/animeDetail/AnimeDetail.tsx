@@ -52,7 +52,9 @@ export const AnimeDetail = async ({ id }: { id: number }) => {
       </section>
     );
 
-  const { title, seasonName, seasonYear, imageUrl, userAnime, reviews } = anime;
+  const { title, seasonName, seasonYear, imageUrl: defaultImage, userAnime, reviews } = anime;
+  const userAnimeRecord = userAnime.find((ua) => ua.userId === userId);
+  const imageUrl = userAnimeRecord?.imageUrl ?? defaultImage;
 
   const ratedReviews = reviews.filter(
     (r) => r.rating !== null && r.rating !== undefined

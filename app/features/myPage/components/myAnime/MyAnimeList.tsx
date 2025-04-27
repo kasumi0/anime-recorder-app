@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { MyAnime } from "./MyAnime";
 import { MyAnimeFromPrisma } from "@/app/types/types";
 import styles from "./myAnime.module.css";
-import { PER_PAGE } from "@/app/api/user-anime/route";
+import { PER_PAGE } from "@/app/lib/pagination";
 const { myAnimeList, moreButton } = styles;
 
 type MyAnimeListProps = {
@@ -44,10 +44,11 @@ export const MyAnimeList = ({
             key={anime.id}
             id={anime.id}
             title={anime.title}
-            imageUrl={anime.imageUrl}
+            defaultImage={anime.imageUrl}
             seasonName={anime.seasonName}
             seasonYear={anime.seasonYear}
             userId={userId}
+            customImage={anime.userAnime?.[0]?.imageUrl}
             registerId={anime.userAnime[0].id}
             status={anime.statuses[0].state}
             rating={anime.reviews[0]?.rating ?? 0}

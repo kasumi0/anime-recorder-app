@@ -2,11 +2,11 @@ import { MyPagePerStatus } from "@/app/features/myPage/MyPagePerStatus";
 import { StatusType } from "@/app/types/types";
 
 type Props = {
-  params: { id: StatusType };
+  params: Promise<{ id: StatusType }>;
 };
 
 export default async function MyPagePerStatusPage({ params }: Props) {
-  const status = params.id;
+  const {id} = await params;
 
-  return <MyPagePerStatus status={status} />;
+  return <MyPagePerStatus status={id} />;
 }

@@ -1,11 +1,11 @@
 import { AnimeDetail } from "@/app/features/animeDetail/AnimeDetail";
 
 type AnimePageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export default async function AnimePage({ params }: AnimePageProps) {
-  const id = parseInt(params.id, 10);  
+  const {id} = await params;
 
-  return <AnimeDetail id={id} />;
+  return <AnimeDetail id={parseInt(id, 10)} />;
 }

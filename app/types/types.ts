@@ -8,6 +8,30 @@ export type AnimeType = {
   };
 };
 
+export type SearchWorksSuccess = {
+  status: "success";
+  works: AnimeType[];
+  endCursor: string;
+  hasNextPage: boolean;
+};
+
+export type SearchWorksError = {
+  status: "error";
+  message: string;
+};
+
+export type SearchWorksResponse = SearchWorksSuccess | SearchWorksError;
+
+export type SearchWorksQueryResponse = {
+  pageInfo: {
+    endCursor: string;
+    hasNextPage: boolean;
+  };
+  edges: {
+    node: AnimeType;
+  }[];
+};
+
 export type RegisterType = {
   id: number;
   title: string;
@@ -32,8 +56,15 @@ export type ReviewDataType = {
   comment: string;
 };
 
-export type MyAnimeType = ReviewDataType & {
+export type MyAnimeType = {
+  id: number;
+  title: string;
+  defaultImage?: string | null;
+  status: StatusType;
+  rating: number;
+  comment: string;
   userId: string;
+  customImage?: string | null;
   seasonYear?: number | null;
   seasonName?: string | null;
   registerId: string;
@@ -46,11 +77,12 @@ export type FormResult = {
     status: StatusType;
     rating: number;
     comment: string;
+    imageUrl?: string | undefined | null
   };
 };
 
 export type MyAnimeFromPrisma = RegisterType & {
-  userAnime: { id: string }[];
+  userAnime: { id: string; imageUrl?: string | null }[];
   statuses: { state: StatusType }[];
   reviews: { rating: number | null; comment: string | null }[];
 };
