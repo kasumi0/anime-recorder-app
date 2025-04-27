@@ -3,6 +3,7 @@
 import { prisma } from "@/app/lib/prisma";
 import { FormResult } from "@/app/types/types";
 import { WatchState } from "@prisma/client";
+import { updateCustomImage } from "./updateCustomImage";
 
 export const updateAnime = async (
   _: FormResult | null,
@@ -14,6 +15,7 @@ export const updateAnime = async (
     const state = formData.get("status") as WatchState;
     const rating = Number(formData.get("rating"));
     const comment = formData.get("review") as string;
+    const imageUrl = formData.get("imageUrl") as string | null;
 
     await prisma.status.upsert({
       where: {
@@ -31,6 +33,17 @@ export const updateAnime = async (
       create: { userId, animeId, rating, comment },
     });
 
+    if (imageUrl) {
+      const imageUpdateResult = await updateCustomImage(
+        userId,
+        animeId,
+        imageUrl
+      );
+      if (!imageUpdateResult.success) {
+        throw new Error("Failed to update custom image");
+      }
+    }
+
     return {
       success: true,
       message: "アニメの情報を更新しました",
@@ -38,6 +51,7 @@ export const updateAnime = async (
         status: state,
         rating,
         comment,
+        imageUrl,
       },
     };
   } catch (error) {
@@ -48,7 +62,7 @@ export const updateAnime = async (
       newData: {
         status: "WANT_TO_WATCH",
         rating: 0,
-        comment: '',
+        comment: "",
       },
     };
   }

@@ -1,5 +1,5 @@
 import { Thumbnail } from "@/app/components/Thumbnail";
-import { FormResult, ReviewDataType, StatusType } from "@/app/types/types";
+import { FormResult, ReviewDataType } from "@/app/types/types";
 import { startTransition, useActionState, useEffect, useState } from "react";
 import StarRatings from "react-star-ratings";
 import { IoCloseCircle } from "react-icons/io5";
@@ -7,13 +7,16 @@ import { FaCircleCheck } from "react-icons/fa6";
 import styles from "./editModal.module.css";
 import { updateAnime } from "@/app/lib/actions/updateAnime";
 import toast from "react-hot-toast";
-const { modal, open, selectBox,ratingArea, modalButtons } = styles;
+import { ImageEditModal } from "../imageEditModal/ImageEditModal";
+import { UpdateFields } from "../myAnime/MyAnime";
+const { modal, open, thumbnailArea, selectBox, ratingArea, modalButtons } =
+  styles;
 
 type EditModalProps = ReviewDataType & {
   isOpen: boolean;
   toggleModal: () => void;
   userId: string;
-  onUpdate: (status: StatusType, rating: number, comment: string) => void
+  onUpdate: (fields: UpdateFields) => void;
 };
 
 export const EditModal = ({
@@ -26,13 +29,19 @@ export const EditModal = ({
   status,
   rating,
   comment,
-  onUpdate
+  onUpdate,
 }: EditModalProps) => {
   const [ratingState, setRating] = useState(rating);
   const [formState, formAction] = useActionState<FormResult | null, FormData>(
     updateAnime,
     null
   );
+
+  const [customImage, setCustomImage] = useState(imageUrl);
+  const handleImageUpdate = (newUrl: string) => {
+    setCustomImage(newUrl);
+  };
+
   const [hasShownToast, setHasShownToast] = useState(false);
 
   useEffect(() => {
@@ -41,21 +50,29 @@ export const EditModal = ({
       startTransition(() => {
         if (formState.success) {
           toast.success(formState.message);
-
-          const { status, rating, comment } = formState.newData;
-          onUpdate(status, rating, comment);
+          const {
+            status,
+            rating,
+            comment,
+            imageUrl: updatedImage,
+          } = formState.newData;
+          onUpdate({ status, rating, comment, imageUrl: updatedImage });
         } else {
           toast.error(formState.message);
         }
         toggleModal();
       });
     }
-  }, [formState, toggleModal, hasShownToast, onUpdate]);
+  }, [formState, toggleModal, hasShownToast, onUpdate, customImage]);
 
   return (
     <div className={`${modal} ${isOpen ? open : ""}`}>
       <form action={formAction}>
-        <Thumbnail imageUrl={imageUrl} title={title} />
+        <div className={thumbnailArea}>
+          <Thumbnail imageUrl={customImage} title={title} />
+          <ImageEditModal onImageUpdate={handleImageUpdate} />
+        </div>
+
         <div>
           <h3>{title}</h3>
           <div className={selectBox}>
@@ -88,6 +105,7 @@ export const EditModal = ({
         <input type="hidden" name="rating" value={ratingState} />
         <input type="hidden" name="animeId" value={id} />
         <input type="hidden" name="userId" value={userId} />
+        {customImage && <input type="hidden" name="imageUrl" value={customImage} />}
 
         <div className={modalButtons}>
           <button type="button" onClick={toggleModal}>

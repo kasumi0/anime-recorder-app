@@ -75,6 +75,7 @@ model UserAnime {
   id      String @id @default(cuid())
   userId  String
   animeId Int
+  imageUrl String?
   user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   anime   Anime  @relation(fields: [animeId], references: [id], onDelete: Cascade)
 

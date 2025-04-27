@@ -15,11 +15,19 @@ import styles from "./myAnime.module.css";
 import { Portal } from "@/app/components/Portal";
 const { body, row, commentBox, noReview, buttons, toolTip } = styles;
 
+export type UpdateFields = {
+    status?: StatusType;
+    rating?: number;
+    comment?: string;
+    imageUrl?: string | null;
+  };
+
 export const MyAnime = ({
   id,
   title,
   userId,
-  imageUrl,
+  customImage,
+  defaultImage,
   seasonYear,
   seasonName,
   status,
@@ -28,6 +36,8 @@ export const MyAnime = ({
 }: MyAnimeType) => {
   const [isPending, startTransition] = useTransition();
   const [isRegistered, setIsRegistered] = useState(true);
+  const imageUrl = customImage ?? defaultImage;
+
   const handleDelete = () => {
     startTransition(async () => {
       const promise = deleteAnime(userId, id);
@@ -43,17 +53,14 @@ export const MyAnime = ({
     });
   };
 
-  const [reviewState, setReviewState] = useState({ status, rating, comment });
-  const handleUpdate = (
-    newStatus: StatusType,
-    newRating: number,
-    newComment: string
-  ) => {
-    setReviewState({
-      status: newStatus,
-      rating: newRating,
-      comment: newComment,
-    });
+  const [reviewState, setReviewState] = useState({
+    status,
+    rating,
+    comment,
+    imageUrl,
+  });
+  const handleUpdate = (fields: UpdateFields) => {
+    setReviewState((prev) => ({ ...prev, ...fields }));
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +69,7 @@ export const MyAnime = ({
   if (isRegistered) {
     return (
       <li key={id} className={body}>
-        <Thumbnail imageUrl={imageUrl} title={title} />
+        <Thumbnail imageUrl={reviewState.imageUrl} title={title} />
         <h3>{title}</h3>
         <div className={row}>
           <span>{getStatus(reviewState.status)}</span>
@@ -102,7 +109,7 @@ export const MyAnime = ({
               id={id}
               userId={userId}
               title={title}
-              imageUrl={imageUrl}
+              imageUrl={reviewState.imageUrl ?? imageUrl}
               status={reviewState.status}
               rating={reviewState.rating}
               comment={reviewState.comment}

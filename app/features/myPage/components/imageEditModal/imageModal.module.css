@@ -1,0 +1,35 @@
+.uploadButton {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  position: relative;
+  background-color: rgba(124, 124, 124, 0.4);
+  backdrop-filter: blur(6px);
+  border-radius: 3px;
+  & svg {
+    font-size: 1.2em;
+    transition: color 0.4s;
+  }
+  &:hover .toolTip {
+    opacity: 1;
+    transition-delay: 1s;
+  }
+  &:hover svg {
+    color: var(--primary-c);
+  }
+}
+
+.toolTip {
+  position: absolute;
+  white-space: nowrap;
+  background-color: #555;
+  inset: auto auto -2.4em 50%;
+  translate: -50%;
+  padding: 0.2em 0.4em;
+  font-size: 12px;
+  border-radius: 3px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
