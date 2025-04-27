@@ -15,10 +15,10 @@ const { headerArea, header, iconArea, linkArea, userName } = styles;
 
 export const Header = async () => {
   const session = await getServerSession(nextAuthOptions);
-  const user = await prisma.user.findUnique({ where: { id: session?.user.id } });
-
-  // セッションを新しいものにするのか、名前はセッションにあるIDをもとに名前を毎回DBから持ってくるほうがいいんですか？
-
+  let user = null;
+  if (session?.user?.id) {
+    user = await prisma.user.findUnique({ where: { id: session?.user.id } });
+  }
 
   return (
     <div className={headerArea}>
@@ -39,7 +39,7 @@ export const Header = async () => {
                   <FaCircleUser />
                 )}
                 <span className={userName}>
-                  <UserDisplay defaultName={user.name ?? "guest"}/>
+                  <UserDisplay defaultName={user.name ?? "guest"} />
                 </span>
               </Link>
             ) : (
