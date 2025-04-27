@@ -73,7 +73,7 @@ export const Anime = ({
     <li key={annictId}>
       <Thumbnail imageUrl={image?.facebookOgImageUrl} title={title} />
       <div className={body}>
-        {status.existsInAnime && (
+        {status.isLoggedIn && status.existsInAnime && (
           <Link href={`/anime/${annictId}`} className={linkCover}>
             <LinkProgressBar size={8} />
           </Link>
