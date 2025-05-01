@@ -77,7 +77,16 @@ export type FormResult = {
     status: StatusType;
     rating: number;
     comment: string;
-    imageUrl?: string | undefined | null
+    imageUrl?: string | undefined | null;
+  };
+};
+
+export type ProfileResult = {
+  success: boolean;
+  message: string;
+  newData: {
+    newIcon?: string | null;
+    newName: string;
   };
 };
 
