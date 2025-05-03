@@ -7,7 +7,7 @@ import { FaCircleCheck } from "react-icons/fa6";
 import styles from "./editModal.module.css";
 import { updateAnime } from "@/app/lib/actions/updateAnime";
 import toast from "react-hot-toast";
-import { ImageEditModal } from "../imageEditModal/ImageEditModal";
+import { ImageEditModal } from "../../../../components/imageEditModal/ImageEditModal";
 import { UpdateFields } from "../myAnime/MyAnime";
 const { modal, open, thumbnailArea, selectBox, ratingArea, modalButtons } =
   styles;
@@ -42,28 +42,25 @@ export const EditModal = ({
     setCustomImage(newUrl);
   };
 
-  const [hasShownToast, setHasShownToast] = useState(false);
-
   useEffect(() => {
-    if (formState?.success !== undefined && !hasShownToast) {
-      setHasShownToast(true);
-      startTransition(() => {
-        if (formState.success) {
-          toast.success(formState.message);
-          const {
-            status,
-            rating,
-            comment,
-            imageUrl: updatedImage,
-          } = formState.newData;
-          onUpdate({ status, rating, comment, imageUrl: updatedImage });
-        } else {
-          toast.error(formState.message);
-        }
-        toggleModal();
-      });
-    }
-  }, [formState, toggleModal, hasShownToast, onUpdate, customImage]);
+    if (!formState) return;
+
+    startTransition(() => {
+      if (formState.success) {
+        toast.success(formState.message);
+        const {
+          status,
+          rating,
+          comment,
+          imageUrl: updatedImage,
+        } = formState.newData;
+        onUpdate({ status, rating, comment, imageUrl: updatedImage });
+      } else {
+        toast.error(formState.message);
+      }
+      toggleModal();
+    });
+  }, [formState, toggleModal, onUpdate, customImage]);
 
   return (
     <div className={`${modal} ${isOpen ? open : ""}`}>
@@ -105,7 +102,9 @@ export const EditModal = ({
         <input type="hidden" name="rating" value={ratingState} />
         <input type="hidden" name="animeId" value={id} />
         <input type="hidden" name="userId" value={userId} />
-        {customImage && <input type="hidden" name="imageUrl" value={customImage} />}
+        {customImage && (
+          <input type="hidden" name="imageUrl" value={customImage} />
+        )}
 
         <div className={modalButtons}>
           <button type="button" onClick={toggleModal}>

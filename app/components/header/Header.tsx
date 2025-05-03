@@ -1,3 +1,4 @@
+'use client'
 import { FaCircleUser } from "react-icons/fa6";
 import styles from "./header.module.css";
 import Image from "next/image";
@@ -9,16 +10,16 @@ import { LuLogOut } from "react-icons/lu";
 import { TbMoodEdit } from "react-icons/tb";
 import { PiListHeart } from "react-icons/pi";
 import { Link } from "../linkProgressBar/Link";
-import UserDisplay from "./state/UserDisplay";
-import { prisma } from "@/app/lib/prisma";
+import { UserDisplay } from "./state/UserDisplay";
+import { useSession } from "next-auth/react";
+import { useUserStore } from "@/app/store/userStore";
 const { headerArea, header, iconArea, linkArea, userName } = styles;
 
-export const Header = async () => {
-  const session = await getServerSession(nextAuthOptions);
-  let user = null;
-  if (session?.user?.id) {
-    user = await prisma.user.findUnique({ where: { id: session?.user.id } });
-  }
+export const Header = () => {
+  const {data:session} = useSession();
+  const user = session?.user;
+  const name = useUserStore((state) => state.name)
+  const icon = useUserStore((state) => state.iconUrl)
 
   return (
     <div className={headerArea}>
@@ -27,21 +28,7 @@ export const Header = async () => {
         <nav>
           <div className={iconArea}>
             {user ? (
-              <Link href={"/profile"}>
-                {user.image ? (
-                  <Image
-                    width={50}
-                    height={50}
-                    alt="profile-icon"
-                    src={user.image}
-                  />
-                ) : (
-                  <FaCircleUser />
-                )}
-                <span className={userName}>
-                  <UserDisplay defaultName={user.name ?? "guest"} />
-                </span>
-              </Link>
+              <UserDisplay defaultName={name || user.name || 'guest'} defaultIcon={icon ?? user.image ?? undefined} />
             ) : (
               <Link href={"/login"}>
                 <FaCircleUser />

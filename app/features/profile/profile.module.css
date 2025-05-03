@@ -1,0 +1,93 @@
+.editCard {
+  padding: 5vw;
+  --w: min(90vw, 440px);
+  border-radius: 1em;
+  position: absolute;
+  inset: 50% auto auto calc((100% + var(--header-w)) / 2);
+  translate: -50% -50%;
+  width: var(--w);
+  background-color: rgb(255 255 255/0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.4);
+  & h2 {
+    font-size: 2em;
+    font-weight: 600;
+    margin-bottom: 2rem;
+  }
+  & form {
+    --p:26px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--p);
+  }
+  & label {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 6px;
+    &:not(:has(input[type='text'])) {
+        border-bottom: 1px solid rgb(0 0 0 /0.1);
+        padding-bottom: var(--p);
+    }
+  }
+  & input {
+    width: 100%;
+    padding-block: 0.4em;
+    &[type='text'] {
+        border-bottom: 1px solid #000;
+
+    }
+  }
+  & h3 {
+    font-weight: 500;
+    font-size: 14px;
+    color: #666;
+  }
+}
+
+.iconArea {
+    display: flex;
+    align-items: end;
+    gap: 1em;
+    & > img,& > svg {
+        width: 60px;
+        height: auto;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    & > div {
+        color: #fff;
+        width: 30px;
+        aspect-ratio: 1;
+    }
+}
+
+.buttonArea {
+  display: flex;
+  gap: 1em;
+  & button {
+    width: 100%;
+    background-color: var(--primary-c);
+    border-radius: 6px;
+    padding: 0.6em 1em;
+    color: #fff;
+    text-align: center;
+    font-weight: 500;
+    border: 2px solid var(--primary-c);
+    transition-property: color, background-color;
+    transition-duration: 0.4s;
+    &:nth-child(2) {
+        background-color: rgb(209, 47, 47);
+        border-color: rgb(209, 47, 47);
+        &:hover {
+            color: rgb(209, 47, 47);
+        }
+    }
+    &:hover {
+      color: var(--primary-c);
+      background-color: transparent;
+    }
+  }
+}
