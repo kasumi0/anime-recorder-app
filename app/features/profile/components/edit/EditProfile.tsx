@@ -10,7 +10,7 @@ import { ProfileResult } from "@/app/types/types";
 import { DeleteUserButton } from "../deleteUser/DeleteUserButton";
 import { FaCircleUser } from "react-icons/fa6";
 import style from "../../profile.module.css";
-const { iconArea, buttonArea } = style;
+const { iconArea } = style;
 
 type Props = {
   id: string;
@@ -51,7 +51,7 @@ export const EditProfile = ({ id, name, image, email }: Props) => {
           <h3>eメール</h3>
           {email}
         </label>
-        
+
         <label>
           <h3>アイコン</h3>
           <div className={iconArea}>
@@ -65,7 +65,10 @@ export const EditProfile = ({ id, name, image, email }: Props) => {
             ) : (
               <FaCircleUser />
             )}
-            <ImageEditModal onImageUpdate={handleImageUpdate} editImage="アイコン"/>
+            <ImageEditModal
+              onImageUpdate={handleImageUpdate}
+              editImage="アイコン"
+            />
           </div>
         </label>
 
@@ -79,11 +82,11 @@ export const EditProfile = ({ id, name, image, email }: Props) => {
         </label>
 
         <input type="hidden" name="userId" value={id} />
-        {customIcon && <input type="hidden" name="imageUrl" value={customIcon} />}
-        
-        <div className={buttonArea}>
-          <button>変更を保存</button>
-        </div>
+        {customIcon && (
+          <input type="hidden" name="imageUrl" value={customIcon} />
+        )}
+
+        <button>変更を保存</button>
       </form>
       <DeleteUserButton />
     </>

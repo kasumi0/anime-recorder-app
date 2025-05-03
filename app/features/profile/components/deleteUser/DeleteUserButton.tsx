@@ -1,4 +1,3 @@
-// app/features/profile/components/DeleteUserButton.tsx
 "use client";
 
 import { deleteUser } from "@/app/lib/actions/deleteUser";
@@ -22,7 +21,7 @@ export const DeleteUserButton = () => {
   };
 
   return (
-    <button onClick={handleDelete}>
+    <button onClick={handleDelete} type="button">
       アカウントを削除
     </button>
   );

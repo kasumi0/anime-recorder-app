@@ -1,10 +1,8 @@
-// app/features/profile/Profile.tsx
 import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "@/app/lib/next-auth/options";
 import { prisma } from "@/app/lib/prisma";
 import { EditProfile } from "./components/edit/EditProfile";
 import style from "./profile.module.css";
-
 const { editCard } = style;
 
 export const Profile = async () => {

@@ -33,7 +33,7 @@ export const ImageEditModal = ({
           multiple: false,
           maxFiles: 1,
           resourceType: "image",
-          clientAllowedFormats: ["jpg", "jpeg", "png", "webp"],
+          clientAllowedFormats: ["jpg", "jpeg", "png", "webp", "svg"],
         }}
       >
         {({ open }: { open?: () => void }) => (
