@@ -9,7 +9,7 @@ export const updateUser = async (
   formData: FormData
 ): Promise<ProfileResult> => {
   try {
-    const userId = formData.get("userid") as string;
+    const userId = formData.get("userId") as string;
     const newIcon = formData.get("imageUrl") as string;
     const newName = formData.get("userName") as string;
 
@@ -24,12 +24,14 @@ export const updateUser = async (
       where: { id: userId },
       data: { name: newName },
     });
+
     if (newIcon) {
       const imageUpdateResult = await updateCustomIcon(userId, newIcon);
       if (!imageUpdateResult.success) {
         throw new Error("Failed to update custom icon");
       }
     }
+    
     return {
       success: true,
       message: "プロフィール情報を更新しました",
