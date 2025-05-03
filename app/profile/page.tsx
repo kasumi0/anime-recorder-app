@@ -1,7 +1,5 @@
-import Profile from "../features/profile/Profile";
+import { Profile } from "../features/profile/Profile";
 
 export default function ProfilePage() {
-  return (
-  <Profile />
-  )
+  return <Profile />;
 }

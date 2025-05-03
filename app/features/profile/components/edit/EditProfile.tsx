@@ -65,9 +65,10 @@ export const EditProfile = ({ id, name, image, email }: Props) => {
             ) : (
               <FaCircleUser />
             )}
-            <ImageEditModal onImageUpdate={handleImageUpdate} />
+            <ImageEditModal onImageUpdate={handleImageUpdate} editImage="アイコン"/>
           </div>
         </label>
+
         <label>
           <h3>名前</h3>
           <input
@@ -78,9 +79,8 @@ export const EditProfile = ({ id, name, image, email }: Props) => {
         </label>
 
         <input type="hidden" name="userId" value={id} />
-        {customIcon && (
-          <input type="hidden" name="imageUrl" value={customIcon} />
-        )}
+        {customIcon && <input type="hidden" name="imageUrl" value={customIcon} />}
+        
         <div className={buttonArea}>
           <button>変更を保存</button>
         </div>
