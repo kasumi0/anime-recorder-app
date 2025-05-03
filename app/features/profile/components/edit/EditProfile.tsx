@@ -1,16 +1,16 @@
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
+import { updateUser } from "@/app/lib/actions/updateUser";
 import { useUserStore } from "@/app/store/userStore";
+import Image from "next/image";
+import toast from "react-hot-toast";
+import { ImageEditModal } from "@/app/components/imageEditModal/ImageEditModal";
+import { ProfileResult } from "@/app/types/types";
 import { DeleteUserButton } from "../deleteUser/DeleteUserButton";
 import { FaCircleUser } from "react-icons/fa6";
-import { ImageEditModal } from "@/app/components/imageEditModal/ImageEditModal";
-import toast from "react-hot-toast";
-import { updateUser } from "@/app/lib/actions/updateUser";
-import { ProfileResult } from "@/app/types/types";
 import style from "../../profile.module.css";
-
-const { iconArea, buttonArea } = style;
+const { iconArea } = style;
 
 type Props = {
   id: string;
@@ -24,15 +24,14 @@ export const EditProfile = ({ id, name, image, email }: Props) => {
     ProfileResult | null,
     FormData
   >(updateUser, null);
-
   const [customIcon, setCustomIcon] = useState(image);
-  const handleImageUpdate = (newUrl: string) => {
-    setCustomIcon(newUrl);
-  };
-
   const setGlobalIcon = useUserStore((state) => state.setIcon);
   const setGlobalName = useUserStore((state) => state.setName);
   const customName = useUserStore((state) => state.name);
+
+  const handleImageUpdate = (newUrl: string) => {
+    setCustomIcon(newUrl);
+  };
 
   useEffect(() => {
     if (formState?.success) {
@@ -49,14 +48,15 @@ export const EditProfile = ({ id, name, image, email }: Props) => {
     <>
       <form action={formAction}>
         <label>
-          <h3>メール</h3>
+          <h3>eメール</h3>
           {email}
         </label>
+
         <label>
           <h3>アイコン</h3>
           <div className={iconArea}>
             {customIcon ? (
-              <img
+              <Image
                 src={customIcon}
                 alt="ユーザー画像"
                 height={100}
@@ -65,9 +65,13 @@ export const EditProfile = ({ id, name, image, email }: Props) => {
             ) : (
               <FaCircleUser />
             )}
-            <ImageEditModal onImageUpdate={handleImageUpdate} />
+            <ImageEditModal
+              onImageUpdate={handleImageUpdate}
+              editImage="アイコン"
+            />
           </div>
         </label>
+
         <label>
           <h3>名前</h3>
           <input
@@ -81,9 +85,8 @@ export const EditProfile = ({ id, name, image, email }: Props) => {
         {customIcon && (
           <input type="hidden" name="imageUrl" value={customIcon} />
         )}
-        <div className={buttonArea}>
-          <button>変更を保存</button>
-        </div>
+
+        <button>変更を保存</button>
       </form>
       <DeleteUserButton />
     </>

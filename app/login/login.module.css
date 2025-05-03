@@ -2,7 +2,7 @@
   --w: min(90vw, 440px);
   border-radius: 1em;
   position: absolute;
-  inset: 50% auto auto calc((100% + var(--header-w)) / 2) ;
+  inset: 50% auto auto calc((100% + var(--header-w)) / 2);
   translate: -50% -50%;
   width: var(--w);
   background-color: rgb(255 255 255/0.3);
@@ -77,11 +77,11 @@
     flex-direction: column;
     gap: 2em;
     width: var(--w);
-    padding: 5vw;
+    padding: 4em;
     & > button {
       align-self: center;
       border-bottom: 1px solid;
-      transition: color .4s;
+      transition: color 0.4s;
       &:hover {
         color: var(--primary-c);
       }
@@ -99,5 +99,5 @@
 
 .errorText {
   color: red;
-  font-size: .9em;
+  font-size: 0.9em;
 }
