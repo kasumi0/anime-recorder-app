@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useCallback, useState, useTransition } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { getSeason } from "@/app/hooks/getSeason";
@@ -64,7 +64,15 @@ export const MyAnime = ({
   };
 
   const [isOpen, setIsOpen] = useState(false);
-  const toggleModal = () => setIsOpen((prev) => !prev);
+  const [isOpenStyle, setIsOpenStyle] = useState(false);
+  const openModal = () => {
+    setIsOpen(true);
+    setTimeout(() => setIsOpenStyle(true), 10)
+  }
+  const closeModal = useCallback(() => {
+     setIsOpenStyle(false);
+     setTimeout(() => setIsOpen(false), 400);
+   }, [])
 
   if (isRegistered) {
     return (
@@ -92,7 +100,7 @@ export const MyAnime = ({
           starSpacing="2px"
         />
         <div className={buttons}>
-          <button type="button" onClick={toggleModal}>
+          <button type="button" onClick={openModal}>
             <FaRegEdit />
             <span className={toolTip}>登録情報を編集</span>
           </button>
@@ -104,8 +112,8 @@ export const MyAnime = ({
         {isOpen && (
           <Portal>
             <EditModal
-              isOpen={isOpen}
-              toggleModal={toggleModal}
+              isOpenStyle={isOpenStyle}
+              closeModal={closeModal}
               id={id}
               userId={userId}
               title={title}

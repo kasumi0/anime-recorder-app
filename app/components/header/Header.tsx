@@ -1,9 +1,6 @@
-'use client'
+"use client";
 import { FaCircleUser } from "react-icons/fa6";
 import styles from "./header.module.css";
-import Image from "next/image";
-import { nextAuthOptions } from "@/app/lib/next-auth/options";
-import { getServerSession } from "next-auth";
 import { IoSearch } from "react-icons/io5";
 import { LuLogIn } from "react-icons/lu";
 import { LuLogOut } from "react-icons/lu";
@@ -13,13 +10,14 @@ import { Link } from "../linkProgressBar/Link";
 import { UserDisplay } from "./state/UserDisplay";
 import { useSession } from "next-auth/react";
 import { useUserStore } from "@/app/store/userStore";
-const { headerArea, header, iconArea, linkArea, userName } = styles;
+const { headerArea, header, iconArea, linkArea } = styles;
 
 export const Header = () => {
-  const {data:session} = useSession();
+  const { data: session } = useSession();
   const user = session?.user;
-  const name = useUserStore((state) => state.name)
-  const icon = useUserStore((state) => state.iconUrl)
+
+  const name = useUserStore((state) => state.name);
+  const icon = useUserStore((state) => state.iconUrl);
 
   return (
     <div className={headerArea}>
@@ -28,7 +26,10 @@ export const Header = () => {
         <nav>
           <div className={iconArea}>
             {user ? (
-              <UserDisplay defaultName={name || user.name || 'guest'} defaultIcon={icon ?? user.image ?? undefined} />
+              <UserDisplay
+                defaultName={name || user.name || "guest"}
+                defaultIcon={icon ?? user.image ?? undefined}
+              />
             ) : (
               <Link href={"/login"}>
                 <FaCircleUser />

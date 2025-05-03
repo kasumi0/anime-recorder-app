@@ -1,18 +1,18 @@
-import { useState } from "react";
 import { CldUploadWidget } from "next-cloudinary";
 import toast from "react-hot-toast";
 import { RiImageAddFill } from "react-icons/ri";
-
 import styles from "./imageModal.module.css";
 const { uploadButton, toolTip } = styles;
 
 type ImageEditModalProps = {
   onImageUpdate: (newUrl: string) => void;
+  editImage?: string;
 };
 
-export const ImageEditModal = ({ onImageUpdate }: ImageEditModalProps) => {
-  const [isUploading, setIsUploading] = useState(false);
-
+export const ImageEditModal = ({
+  onImageUpdate,
+  editImage = "サムネ",
+}: ImageEditModalProps) => {
   return (
     <div>
       <CldUploadWidget
@@ -20,7 +20,6 @@ export const ImageEditModal = ({ onImageUpdate }: ImageEditModalProps) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onSuccess={async (result: any) => {
           const url = result?.info?.secure_url;
-          setIsUploading(true);
           if (!url) {
             toast.error("画像のアップロードに失敗しました");
             return;
@@ -28,7 +27,6 @@ export const ImageEditModal = ({ onImageUpdate }: ImageEditModalProps) => {
             toast.success("画像をアップロードしました");
             onImageUpdate(url);
           }
-          setIsUploading(false);
         }}
         options={{
           sources: ["local", "url"],
@@ -45,11 +43,10 @@ export const ImageEditModal = ({ onImageUpdate }: ImageEditModalProps) => {
             className={uploadButton}
           >
             <RiImageAddFill />
-            <span className={toolTip}>サムネを編集</span>
+            <span className={toolTip}>{editImage}を編集</span>
           </button>
         )}
       </CldUploadWidget>
-      {isUploading && <p>アップロード中...</p>}
     </div>
   );
 };

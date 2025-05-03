@@ -2,7 +2,6 @@
 "use client";
 
 import { deleteUser } from "@/app/lib/actions/deleteUser";
-import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 

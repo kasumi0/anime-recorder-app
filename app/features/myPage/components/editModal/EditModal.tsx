@@ -13,15 +13,15 @@ const { modal, open, thumbnailArea, selectBox, ratingArea, modalButtons } =
   styles;
 
 type EditModalProps = ReviewDataType & {
-  isOpen: boolean;
-  toggleModal: () => void;
+  isOpenStyle: boolean;
+  closeModal: () => void;
   userId: string;
   onUpdate: (fields: UpdateFields) => void;
 };
 
 export const EditModal = ({
-  isOpen,
-  toggleModal,
+  isOpenStyle,
+  closeModal,
   userId,
   id,
   title,
@@ -58,12 +58,12 @@ export const EditModal = ({
       } else {
         toast.error(formState.message);
       }
-      toggleModal();
+      closeModal();
     });
-  }, [formState, toggleModal, onUpdate, customImage]);
+  }, [formState, closeModal, onUpdate]);
 
   return (
-    <div className={`${modal} ${isOpen ? open : ""}`}>
+    <div className={`${modal} ${isOpenStyle ? open : ""}`}>
       <form action={formAction}>
         <div className={thumbnailArea}>
           <Thumbnail imageUrl={customImage} title={title} />
@@ -107,7 +107,7 @@ export const EditModal = ({
         )}
 
         <div className={modalButtons}>
-          <button type="button" onClick={toggleModal}>
+          <button type="button" onClick={closeModal}>
             <IoCloseCircle />
             閉じる
           </button>
