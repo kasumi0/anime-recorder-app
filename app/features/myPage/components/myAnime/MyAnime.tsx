@@ -59,9 +59,9 @@ export const MyAnime = ({
     comment,
     imageUrl,
   });
-  const handleUpdate = (fields: UpdateFields) => {
+  const handleUpdate = useCallback((fields: UpdateFields) => {
     setReviewState((prev) => ({ ...prev, ...fields }));
-  };
+  }, []);
 
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenStyle, setIsOpenStyle] = useState(false);

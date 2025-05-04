@@ -44,7 +44,6 @@ export const EditModal = ({
 
   useEffect(() => {
     if (!formState) return;
-
     startTransition(() => {
       if (formState.success) {
         toast.success(formState.message);
