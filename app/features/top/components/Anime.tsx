@@ -24,11 +24,7 @@ export const Anime = ({
   });
 
   useEffect(() => {
-    console.log(`[Anime] mounted: annictId=${annictId}`); // 👈 マウントログ追加
-
     const fetchStatus = async () => {
-      console.log(`[Anime] fetchStatus start: annictId=${annictId}`); // 👈 fetch開始ログ追加
-
       const res = await fetch("/api/anime-status", {
         method: "POST",
         headers: {
@@ -36,15 +32,11 @@ export const Anime = ({
         },
         body: JSON.stringify({ animeId: annictId }),
       });
-
       if (res.ok) {
         const data = await res.json();
-        console.log(`[Anime] fetchStatus success: annictId=${annictId}`, data); // 👈 fetch成功ログ追加
-
         setStatus(data);
       }
     };
-
     fetchStatus();
   }, [annictId]);
 

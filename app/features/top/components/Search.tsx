@@ -2,21 +2,21 @@
 
 import { IoSearch } from "react-icons/io5";
 import styles from "../top.module.css";
-import { useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { Dispatch, SetStateAction, useTransition } from "react";
 import { PulseLoader } from "react-spinners";
 const { searchArea, iconBox } = styles;
+type Props = {
+  setQuery: Dispatch<SetStateAction<string | null>>;
+};
 
-export const Search = () => {
-  const [isPending, startTransition] = useTransition()
-  const router = useRouter()
+export const Search = ({ setQuery }: Props) => {
+  const [isPending, startTransition] = useTransition();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const query = new FormData(e.currentTarget).get('query')
-    startTransition(() => {
-      router.push(`?query=${query}`);
-    })
-  }
+    e.preventDefault();
+    const query = (e.currentTarget.query as HTMLInputElement).value;
+    startTransition(() => setQuery(query));
+  };
 
   return (
     <form onSubmit={handleSubmit} className={searchArea}>
