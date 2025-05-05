@@ -3,17 +3,49 @@
 import { Search } from "./components/Search";
 import styles from "./top.module.css";
 import { Anime } from "./components/Anime";
-import { useWorks } from "@/app/hooks/useWorks";
-
+import { useCallback, useEffect, useState } from "react";
+import { AnimeType } from "@/app/types/types";
+import { searchAnime } from "@/app/lib/actions/searchAnime";
+import { PER_PAGE } from "@/app/lib/pagination";
 const { resultList, noAnime, moreButton } = styles;
 
 export const Top = () => {
-  const { works, hasNext, isLoading, hasQuery, fetchMore } = useWorks();
+  const [query, setQuery] = useState<string | null>(null);
+  const [works, setWorks] = useState<AnimeType[]>([]);
+  const [cursor, setCursor] = useState<string>("");
+  const [hasNext, setHasNext] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchWorks = useCallback(
+    async (after?: string) => {
+      setIsLoading(true);
+      const result = await searchAnime([query!], PER_PAGE, after);
+      if (result.status === "error") {
+        setWorks([]);
+        console.error(result.message);
+        setIsLoading(false);
+        return;
+      }
+      setWorks((prev) => (after ? [...prev, ...result.works] : result.works));
+      setCursor(result.endCursor);
+      setHasNext(result.hasNextPage);
+      setIsLoading(false);
+    },
+    [query]
+  );
+
+  useEffect(() => {
+    if (query) fetchWorks();
+    else setWorks([]);
+  }, [query, fetchWorks]);
+
+  const fetchMore = () => fetchWorks(cursor);
+  
   return (
     <section>
-      <Search />
+      <Search setQuery={setQuery}/>
 
-      {!hasQuery ? null : works?.length === 0 ? (
+      {query === null ? null : works?.length === 0 ? (
         <p className={noAnime}>該当するアニメが見つかりません</p>
       ) : (
         <>

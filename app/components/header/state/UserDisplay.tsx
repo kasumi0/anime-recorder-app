@@ -5,7 +5,7 @@ import { Link } from "../../linkProgressBar/Link";
 import { FaCircleUser } from "react-icons/fa6";
 import { useUserStore } from "@/app/store/userStore";
 import style from "../header.module.css";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 const { userName } = style;
 
 type Props = {
@@ -16,15 +16,16 @@ type Props = {
 export const UserDisplay = ({ defaultName, defaultIcon }: Props) => {
   const name = useUserStore((state) => state.name);
   const icon = useUserStore((state) => state.iconUrl);
-  const setIconUrl = useUserStore((state) => state.setIcon);
-  const setName = useUserStore((state) => state.setName);
+  // const setIconUrl = useUserStore((state) => state.setIcon);
+  // const setName = useUserStore((state) => state.setName);
   
-  useEffect(() => {
-    if (!name) setName(defaultName);
-    if (!icon && defaultIcon) setIconUrl(defaultIcon);
-  }, [name, setName, defaultIcon, icon, setIconUrl, defaultName]);
+  // useEffect(() => {
+  //   if (!name) setName(defaultName);
+  //   if (!icon && defaultIcon) setIconUrl(defaultIcon);
+  // }, [name, setName, defaultIcon, icon, setIconUrl, defaultName]);
 
   const profileIcon = icon ?? defaultIcon;
+  const profileName = name || defaultName;
 
   return (
     <Link href={"/profile"}>
@@ -33,7 +34,7 @@ export const UserDisplay = ({ defaultName, defaultIcon }: Props) => {
       ) : (
         <FaCircleUser />
       )}
-      <span className={userName}>{name}</span>
+      <span className={userName}>{profileName}</span>
     </Link>
   );
 };

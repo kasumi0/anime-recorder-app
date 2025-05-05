@@ -28,7 +28,7 @@ const Box = ({ click }: { click: boolean }) => {
   const geometryArgs = useRef<[number, number, number]>([2, 2, 2]).current;
 
   const direction = useRef(Math.random() < 0.5 ? 1 : -1).current;
-  const rotationSpeed = useRef(.005 * direction).current;
+  const rotationSpeed = useRef(0.005 * direction).current;
 
   useEffect(() => {
     if (ref.current) {
