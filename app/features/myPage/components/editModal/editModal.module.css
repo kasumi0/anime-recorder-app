@@ -73,7 +73,6 @@
     aspect-ratio: 1;
     margin: 1em;
   }
-
 }
 .selectBox {
   background-color: #444;
@@ -141,5 +140,18 @@
         background-color: var(--primary-c);
       }
     }
+  }
+}
+
+@media (width < 768px) {
+  .modal {
+    & form {
+      column-gap: 1em;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  .thumbnailArea {
+    grid-area: 1/1/2/3;
   }
 }
