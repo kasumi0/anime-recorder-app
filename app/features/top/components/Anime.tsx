@@ -8,7 +8,8 @@ import styles from "../top.module.css";
 import { Thumbnail } from "@/app/components/Thumbnail";
 import { LinkProgressBar } from "@/app/components/linkProgressBar/LinkProgressBar";
 import { useEffect, useState } from "react";
-const { isRegisteredLabel, body, linkCover, linkLogin } = styles;
+import { IoIosArrowDropright } from "react-icons/io";
+const { isRegisteredLabel, body, linkCover, linkLogin, spNav } = styles;
 
 export const Anime = ({
   annictId,
@@ -76,6 +77,12 @@ export const Anime = ({
           {seasonName && <span>{getSeason(seasonName)}</span>}
         </div>
         {getRegister()}
+        {status.isLoggedIn && status.existsInAnime && (
+          <span className={spNav}>
+            みんなのレビューを見る
+            <IoIosArrowDropright />
+          </span>
+        )}
       </div>
     </li>
   );

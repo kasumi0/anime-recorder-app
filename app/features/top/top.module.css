@@ -144,6 +144,9 @@
     background-color: #333;
   }
 }
+.spNav {
+  display: none;
+}
 
 @media (width < 768px) {
   .searchArea {
@@ -154,5 +157,17 @@
   }
   .resultList {
     margin-top: 60px;
+  }
+  .spNav {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    align-items: center;
+    grid-area: 4/1/5/3;
+    color: color-mix(in srgb, var(--primary-c), #fff);
+    font-weight: 500;
+    & svg {
+      font-size: 20px;
+    }
   }
 }
