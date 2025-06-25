@@ -129,6 +129,7 @@ export const AnimeDetail = async ({ id }: { id: number }) => {
             <p className={noReview}>レビューはまだありません。</p>
           )}
         </div>
+        
         <div className={registerArea}>
           {isRegistered ? (
             <p className={isRegisteredLabel}>登録済み</p>
