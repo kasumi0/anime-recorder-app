@@ -54,7 +54,7 @@
       position: absolute;
       inset: 50% 1em auto auto;
       translate: 0 -50%;
-      opacity: .6;
+      opacity: 0.6;
     }
   }
   & input {
@@ -142,5 +142,17 @@
   }
   &:hover {
     background-color: #333;
+  }
+}
+
+@media (width < 768px) {
+  .searchArea {
+    inset: 80px 5vw auto;
+    & label {
+      width: 100%;
+    }
+  }
+  .resultList {
+    margin-top: 60px;
   }
 }

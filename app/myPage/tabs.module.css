@@ -8,7 +8,7 @@
 .tabs {
   --p: 4px;
   width: min(100%, 900px);
-  margin: max(5vw, 50px) auto 0;
+  margin: max(5vw, 30px) auto 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(8.4em, 1fr));
   background-color: rgb(255 255 255/0.4);
@@ -70,7 +70,32 @@
     & > span {
       position: absolute;
       inset: auto auto -24px 50%;
-      translate: -50%; 
+      translate: -50%;
+    }
+  }
+}
+
+@media (width < 768px) {
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: transparent;
+    backdrop-filter: none;
+    padding: 0;
+    gap: 6px;
+    &::after {
+      top: calc(anchor(--link-active start) - (var(--p) ));
+    }
+    & > a {
+      font-size: 13px;
+      background-color: rgb(255 255 255/0.4);
+      border-radius: 1.6em;
+      backdrop-filter: blur(6px);
+      flex: 1 1 100px;
+      padding: 0.5em 0.8em;
+      & > span {
+        bottom:-10px;
+      }
     }
   }
 }

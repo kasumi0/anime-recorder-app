@@ -10,7 +10,8 @@ import { Link } from "../linkProgressBar/Link";
 import { UserDisplay } from "./state/UserDisplay";
 import { useSession } from "next-auth/react";
 import { useUserStore } from "@/app/store/userStore";
-const { headerArea, header, iconArea, linkArea } = styles;
+import { useHamburgerStore } from "@/app/store/hamburgerStore";
+const { headerArea, hamburger, header, iconArea, linkArea, open } = styles;
 
 export const Header = () => {
   const { data: session } = useSession();
@@ -18,11 +19,17 @@ export const Header = () => {
 
   const name = useUserStore((state) => state.name);
   const icon = useUserStore((state) => state.iconUrl);
+  const isOpen = useHamburgerStore((state) => state.isOpen);
+  const handleToggle = useHamburgerStore((state) => state.setIsOpen);
 
   return (
-    <div className={headerArea}>
+    <div className={`${headerArea} ${isOpen ? open : ''}`}>
       <header className={header}>
         <h1>Anime Recorder</h1>
+        <button type="button" className={hamburger} onClick={handleToggle}>
+          <span></span>
+          <span></span>
+        </button>
         <nav>
           <div className={iconArea}>
             {user ? (

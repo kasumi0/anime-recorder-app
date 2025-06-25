@@ -1,12 +1,12 @@
 .myAnimeList {
-  padding-top: max(5vw, 50px);
+  padding-top: max(5vw, 30px);
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 5vw;
 }
 
 .body {
-  padding: max(3vw, 1em);
+  padding: max(3vw, 1.4em);
   border-radius: 10px;
   background-color: rgb(0 0 0/0.4);
   backdrop-filter: blur(10px);
@@ -25,9 +25,9 @@
   h4 {
     font-weight: 500;
   }
-  &:last-child {
+  /* &:last-child {
     flex: 1;
-  }
+  } */
 }
 .row {
   display: flex;
