@@ -74,9 +74,6 @@ main {
   }
 }
 
-
-
-
 /* Vertical rhythm */
 /* ============================================ */
 
@@ -272,6 +269,11 @@ textarea {
   text-align: inherit;
   cursor: pointer;
 }
+
+input,textarea,select {
+  font-size: 16px;
+}
+
 
 /**
  * Reset radio and checkbox appearance to preserve their look in iOS.
